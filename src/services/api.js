@@ -1,7 +1,13 @@
-export async function getCategories() {
-  // Implemente aqui
+export async function getCategories(endPoint) {
+  if (endPoint === undefined) {
+    endPoint = 'categories';
+  }
+  const returnCategories = await fetch(`https://api.mercadolibre.com/sites/MLB/${endPoint}`);
+  const categories = await returnCategories.json();
+  console.log(categories);
+  return categories;
 }
 
-export async function getProductsFromCategoryAndQuery(/* categoryId, query */) {
-  // Implemente aqui! Quando o fizer, descomente os parâmetros que essa função recebe
+export async function getProductsFromCategoryAndQuery(categoryId, query) {
+  return categoryId !== undefined ? getCategories(categoryId) : getCategories(query);
 }
