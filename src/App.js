@@ -1,8 +1,10 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { getCategories } from './services/api';
 
 function App() {
+  getCategories();
   return (
     <div className="App">
       <header className="App-header">
