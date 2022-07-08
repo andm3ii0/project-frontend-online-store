@@ -11,9 +11,10 @@ class ListCategories extends React.Component {
   }
 
   async componentDidMount() {
-    const categories = await getCategories();
-    // console.log(categories);
-    this.setState({ categories });
+    const { categories } = this.setState;
+    if (categories === undefined) {
+      this.setState({ categories: await getCategories() });
+    }
   }
 
   render() {
