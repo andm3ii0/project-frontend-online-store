@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getProduct } from '../services/api';
+import Header from './Header';
 
 class ProductPage extends React.Component {
   constructor() {
@@ -18,21 +19,31 @@ class ProductPage extends React.Component {
 
   render() {
     const { product } = this.state;
-    console.log(product.thumbnail);
+    const { onHandleClickCart } = this.props;
     return (
       <div>
+        <Header />
         <p data-testid="product-detail-name">{product.title}</p>
         <p>
           R$
           {product.price}
         </p>
         <img src={ product.thumbnail } alt={ product.title } />
+        <button
+          data-testid="product-detail-add-to-cart"
+          type="button"
+          value={ JSON.stringify(product) }
+          onClick={ onHandleClickCart }
+        >
+          carrinho
+        </button>
       </div>
     );
   }
 }
 
 ProductPage.propTypes = {
+  onHandleClickCart: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
