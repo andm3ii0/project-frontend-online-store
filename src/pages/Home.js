@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import Header from './Header';
 import ListCategories from './ListCategories';
@@ -39,11 +40,13 @@ class Home extends React.Component {
             Digite algum termo de pesquisa ou escolha uma categoria.
           </p>
         ) : itensList.map((produto) => (
-          <div key={ produto.id } data-testid="product">
-            <img src={ produto.thumbnail } alt={ produto.title } />
-            <p>{produto.title}</p>
-            <p>{produto.price}</p>
-          </div>))}
+          <Link to={ `/productDetails/${produto.id}` } key={ produto.id }>
+            <div data-testid="product">
+              <img src={ produto.thumbnail } alt={ produto.title } />
+              <p>{produto.title}</p>
+              <p>{produto.price}</p>
+            </div>
+          </Link>))}
       </div>
     );
   }
