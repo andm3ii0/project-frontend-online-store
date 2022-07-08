@@ -18,6 +18,7 @@ class Header extends React.Component {
           />
           <button
             type="button"
+            // value={ inputValue }
             data-testid="query-button"
             onClick={ onHandleClick }
           >

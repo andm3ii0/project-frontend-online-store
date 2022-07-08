@@ -11,9 +11,11 @@ class Home extends React.Component {
     };
   }
 
-  onHandleClick = async () => {
+  onHandleClick = async ({ target }) => {
+    const { value } = target;
     const { inputValue } = this.state;
-    const itensList = await getProductsFromCategoryAndQuery(`search?q=${inputValue}`);
+    const itensList = await
+    getProductsFromCategoryAndQuery(`search?category=${value}&q=${inputValue}`);
     this.setState({ itensList: itensList.results });
   }
 
@@ -31,7 +33,7 @@ class Home extends React.Component {
           onHandleClick={ this.onHandleClick }
           onHandleChange={ this.onHandleChange }
         />
-        <ListCategories />
+        <ListCategories onHandleClickCotegories={ this.onHandleClick } />
         {itensList === undefined ? (
           <p data-testid="home-initial-message">
             Digite algum termo de pesquisa ou escolha uma categoria.
