@@ -34,7 +34,14 @@ class App extends React.Component {
               onHandleClickCart={ this.onHandleClickCart }
             />) }
           />
-          <Route exact path="/productDetails/:id" component={ ProductPage } />
+          <Route
+            exact
+            path="/productDetails/:id"
+            render={ (props) => (<ProductPage
+              { ...props }
+              onHandleClickCart={ this.onHandleClickCart }
+            />) }
+          />
           <Route
             path="/cart"
             render={ (props) => (<Cart { ...props } cartItems={ cartItems } />) }
