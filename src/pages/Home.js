@@ -1,4 +1,6 @@
 import React from 'react';
+import Proptypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import Header from './Header';
 import ListCategories from './ListCategories';
@@ -11,9 +13,11 @@ class Home extends React.Component {
     };
   }
 
-  onHandleClick = async () => {
+  onHandleClick = async ({ target }) => {
+    const { value } = target;
     const { inputValue } = this.state;
-    const itensList = await getProductsFromCategoryAndQuery(`search?q=${inputValue}`);
+    const itensList = await
+    getProductsFromCategoryAndQuery(`search?category=${value}&q=${inputValue}`);
     this.setState({ itensList: itensList.results });
   }
 
@@ -24,6 +28,7 @@ class Home extends React.Component {
 
   render() {
     const { inputValue, itensList } = this.state;
+    const { onHandleClickCart } = this.props;
     return (
       <div>
         <Header
@@ -31,20 +36,42 @@ class Home extends React.Component {
           onHandleClick={ this.onHandleClick }
           onHandleChange={ this.onHandleChange }
         />
-        <ListCategories />
+        <ListCategories onHandleClickCotegories={ this.onHandleClick } />
         {itensList === undefined ? (
           <p data-testid="home-initial-message">
             Digite algum termo de pesquisa ou escolha uma categoria.
           </p>
-        ) : itensList.map((produto) => (
-          <div key={ produto.id } data-testid="product">
-            <img src={ produto.thumbnail } alt={ produto.title } />
-            <p>{produto.title}</p>
-            <p>{produto.price}</p>
-          </div>))}
+        ) : itensList.map((produto) => {
+          console.log(produto);
+          return (
+            <div key={ produto.id }>
+              <Link
+                to={ `/productDetails/${produto.id}` }
+                data-testid="product-detail-link"
+              >
+                <div data-testid="product">
+                  <img src={ produto.thumbnail } alt={ produto.title } />
+                  <p>{produto.title}</p>
+                  <p>{produto.price}</p>
+                </div>
+              </Link>
+              <button
+                data-testid="product-add-to-cart"
+                type="button"
+                value={ JSON.stringify(produto) }
+                onClick={ onHandleClickCart }
+              >
+                carrinho
+              </button>
+            </div>);
+        })}
       </div>
     );
   }
 }
+
+Home.propTypes = {
+  onHandleClickCart: Proptypes.func.isRequired,
+};
 
 export default Home;
