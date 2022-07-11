@@ -42,7 +42,6 @@ class Home extends React.Component {
             Digite algum termo de pesquisa ou escolha uma categoria.
           </p>
         ) : itensList.map((produto) => {
-          console.log(produto);
           return (
             <div key={ produto.id }>
               <Link
