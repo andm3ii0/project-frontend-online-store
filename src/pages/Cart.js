@@ -1,27 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import CartCardItem from './CardCartItem';
 
 class Cart extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      qtdItem: 3,
+    };
+  }
+
   render() {
     const { cartItems } = this.props;
-    console.log(cartItems);
+    const { qtdItem } = this.state;
+    console.log(qtdItem);
+    // findIndex() retorna o primeiro elemnto da condição
+    const stringObj = cartItems.map((item) => JSON.stringify(item));
+    const noRepeatItemsString = stringObj.filter(
+      (ele, pos) => stringObj.indexOf(ele) === pos,
+    );
+    const noRepeatItems = noRepeatItemsString.map((item) => JSON.parse(item));
     return (
       cartItems.length === 0 ? (
         <div>
           <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
         </div>
-      ) : cartItems.map((item) => (
-        <div key={ item.id }>
-          <p data-testid="shopping-cart-product-name">{item.title}</p>
-          <p
-            data-testid="shopping-cart-product-quantity"
-          >
-            {cartItems.filter(
-              (item1) => JSON.stringify(item1) === JSON.stringify(item),
-            ).length}
-          </p>
-        </div>
-      ))
+      ) : noRepeatItems.map((item) => {
+        const qtd = cartItems.filter(
+          (item1) => JSON.stringify(item1) === JSON.stringify(item),
+        ).length;
+        return (
+          <CartCardItem key={ item.id } title={ item.title } qtd={ qtd } />
+        );
+      })
 
     );
   }
