@@ -1,5 +1,5 @@
-import React from 'react';
 import Proptypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import Header from './Header';
@@ -36,32 +36,36 @@ class Home extends React.Component {
           onHandleClick={ this.onHandleClick }
           onHandleChange={ this.onHandleChange }
         />
-        <ListCategories onHandleClickCotegories={ this.onHandleClick } />
-        {itensList === undefined ? (
-          <p data-testid="home-initial-message">
-            Digite algum termo de pesquisa ou escolha uma categoria.
-          </p>
-        ) : itensList.map((produto) => (
-          <div key={ produto.id }>
-            <Link
-              to={ `/productDetails/${produto.id}` }
-              data-testid="product-detail-link"
-            >
-              <div data-testid="product">
-                <img src={ produto.thumbnail } alt={ produto.title } />
-                <p>{produto.title}</p>
-                <p>{produto.price}</p>
-              </div>
-            </Link>
-            <button
-              data-testid="product-add-to-cart"
-              type="button"
-              value={ JSON.stringify(produto) }
-              onClick={ onHandleClickCart }
-            >
-              carrinho
-            </button>
-          </div>))}
+        <div className="global">
+          <ListCategories onHandleClickCotegories={ this.onHandleClick } />
+          <div className="home-products">
+            {itensList === undefined ? (
+              <p data-testid="home-initial-message">
+                Digite algum termo de pesquisa ou escolha uma categoria.
+              </p>
+            ) : itensList.map((produto) => (
+              <div key={ produto.id } className="products">
+                <Link
+                  to={ `/productDetails/${produto.id}` }
+                  data-testid="product-detail-link"
+                >
+                  <div data-testid="product">
+                    <img src={ produto.thumbnail } alt={ produto.title } />
+                    <p>{produto.title}</p>
+                    <p>{produto.price}</p>
+                  </div>
+                </Link>
+                <button
+                  data-testid="product-add-to-cart"
+                  type="button"
+                  value={ JSON.stringify(produto) }
+                  onClick={ onHandleClickCart }
+                >
+                  Carrinho
+                </button>
+              </div>))}
+          </div>
+        </div>
       </div>
     );
   }

@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { getCategories } from '../services/api';
 
 class ListCategories extends React.Component {
@@ -21,7 +21,7 @@ class ListCategories extends React.Component {
     const { categories } = this.state;
     const { onHandleClickCotegories } = this.props;
     return (
-      <div>
+      <div className="div-categories">
         {categories.map((categoria) => (
           <div key={ categoria.id }>
             <button
@@ -29,6 +29,7 @@ class ListCategories extends React.Component {
               data-testid="category"
               value={ categoria.id }
               onClick={ onHandleClickCotegories }
+              className="button-categories"
             >
               {categoria.name}
             </button>

@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 class CartCardItem extends React.Component {
   constructor() {
@@ -22,35 +22,38 @@ class CartCardItem extends React.Component {
   }
 
   render() {
-    const { title } = this.props;
+    const { title, thumbnail } = this.props;
     const { qtd } = this.state;
 
     return (
-      <div>
-        <p data-testid="shopping-cart-product-name">{title}</p>
-        <button
-          value="-"
-          type="button"
-          data-testid="product-decrease-quantity"
-          onClick={ this.onHandleChange }
-        >
-          -
+      <div className="div-itens-carri">
+        <img src={ thumbnail } alt={ title } />
+        <div className="div-card-carri">
+          <p data-testid="shopping-cart-product-name">{title}</p>
+          <button
+            value="-"
+            type="button"
+            data-testid="product-decrease-quantity"
+            onClick={ this.onHandleChange }
+          >
+            -
 
-        </button>
-        <p
-          data-testid="shopping-cart-product-quantity"
-        >
-          {qtd}
-        </p>
-        <button
-          value="+"
-          type="button"
-          data-testid="product-increase-quantity"
-          onClick={ this.onHandleChange }
-        >
-          +
+          </button>
+          <p
+            data-testid="shopping-cart-product-quantity"
+          >
+            {qtd}
+          </p>
+          <button
+            value="+"
+            type="button"
+            data-testid="product-increase-quantity"
+            onClick={ this.onHandleChange }
+          >
+            +
 
-        </button>
+          </button>
+        </div>
       </div>
     );
   }
@@ -59,6 +62,7 @@ class CartCardItem extends React.Component {
 CartCardItem.propTypes = {
   qtd: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
+  thumbnail: PropTypes.string.isRequired,
 };
 
 export default CartCardItem;
