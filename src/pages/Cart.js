@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import CartCardItem from './CardCartItem';
 
 class Cart extends React.Component {
@@ -14,7 +14,7 @@ class Cart extends React.Component {
     const { cartItems } = this.props;
     const { qtdItem } = this.state;
     console.log(qtdItem);
-    // findIndex() retorna o primeiro elemnto da condição
+    // findIndex() retorna o primeiro elemento da condição
     const stringObj = cartItems.map((item) => JSON.stringify(item));
     const noRepeatItemsString = stringObj.filter(
       (ele, pos) => stringObj.indexOf(ele) === pos,
@@ -23,14 +23,24 @@ class Cart extends React.Component {
     return (
       cartItems.length === 0 ? (
         <div>
-          <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
+          <p
+            className="msg-vazio"
+            data-testid="shopping-cart-empty-message"
+          >
+            Seu carrinho está vazio
+          </p>
         </div>
       ) : noRepeatItems.map((item) => {
         const qtd = cartItems.filter(
           (item1) => JSON.stringify(item1) === JSON.stringify(item),
         ).length;
         return (
-          <CartCardItem key={ item.id } title={ item.title } qtd={ qtd } />
+          <CartCardItem
+            key={ item.id }
+            title={ item.title }
+            thumbnail={ item.thumbnail }
+            qtd={ qtd }
+          />
         );
       })
 
